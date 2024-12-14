@@ -19,7 +19,7 @@ app.get('/', (req, res)=>{
     res.render("home")
 })
 
-app.use('/users', userRouter)
+app.use('/users', userRouter) // using user router
 
 app.listen(PORT, ()=> {console.log(`server started at ${PORT}`)});
 
