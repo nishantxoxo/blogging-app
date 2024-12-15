@@ -9,23 +9,34 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
+         <% if (locals.user) { %>
           <li class="nav-item">
-            <a class="nav-link" href="#">add blog</a>
+            <a class="nav-link" href="#">add blog</a>   
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Nishantxoxo
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">LOGOUT</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
+         <% } %>
+          <% if (locals.user) { %>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <%= user.role %>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/users/logout">LOGOUT</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li>
+          <% } else {%>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/signup">create account</a>   
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/signin">signin</a>   
+            </li>
+            <%} %>
+          <!-- <li class="nav-item">
             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li>
+          </li> -->
         </ul>
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -34,3 +45,9 @@
       </div>
     </div>
   </nav>
+
+<% if (locals.error) { %>
+  <div class="alert alert-danger" role="alert">
+   <%= locals.error %>
+  </div>
+<% } %>

@@ -10,15 +10,25 @@ router.get('/signup', (req, res) => {
     return res.render("signup")
 });
 
-router.post('/signin', (req, res) => {
+router.post('/signin', async (req, res) => {
     const {email, password} = req.body
-    const user =  User.matchPassword(email, password)
-    console.log(user)
-    return res.redirect('/')
+    
+    try{
+        const token = await User.matchPasswordAndGenerateToken(email, password)
+        // console.log('the token is ', token)
+        return res.cookie('token', token).redirect('/')
+        
+    }catch(e){                                           //caught an error thrown from the mongoose fucntion used above
+        return res.render('signin', {
+            error: "incorrect email or password"
+        })
+    }
+
 });
 
 router.post('/signup', async (req, res)=> {
-    const {name, email, password} = req.body
+
+    const {name, email, password} = req.body 
 
     await User.create({
         name: name,
@@ -26,6 +36,11 @@ router.post('/signup', async (req, res)=> {
         password: password,
     })
     return res.redirect("/")
+})
+
+
+router.get('/logout', (req, res)=>{
+    res.clearCookie('token').redirect('/')
 })
 
 module.exports = router
