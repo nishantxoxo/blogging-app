@@ -20,6 +20,5 @@ function checkForAuthenticationCookie(cookiename){             //taking cookie a
     }
 }
 
-
 module.exports= checkForAuthenticationCookie                    //exporting the module
  
