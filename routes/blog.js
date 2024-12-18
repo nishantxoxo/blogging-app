@@ -6,6 +6,7 @@ const Comment = require("../models/comment")
 
 
 
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, path.resolve(`./public/uploads/`))
@@ -32,10 +33,15 @@ router.get('/add-new', (req, res)=>{
 router.get('/:id', async (req, res)=> {
     const id = req.params.id
     const blog = await Blog.findById(id).populate("createdBy")
+    const comments = await Comment.find({ blogID: req.params.id}).populate("createdBy")
+
+    console.log("comments--- ", comments)
+
     res.render('blog', 
         {
         user: req.user,
-        blog: blog
+        blog: blog,
+        comment: comments
         }
 
     )
