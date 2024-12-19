@@ -15,7 +15,7 @@ router.post('/signin', async (req, res) => {
     
     try{
         const token = await User.matchPasswordAndGenerateToken(email, password)
-        // console.log('the token is ', token)
+      
         return res.cookie('token', token).redirect('/')
         
     }catch(e){                                           //caught an error thrown from the mongoose fucntion used above

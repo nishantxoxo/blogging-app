@@ -35,7 +35,7 @@ router.get('/:id', async (req, res)=> {
     const blog = await Blog.findById(id).populate("createdBy")
     const comments = await Comment.find({ blogID: req.params.id}).populate("createdBy")
 
-    console.log("comments--- ", comments)
+  
 
     res.render('blog', 
         {
